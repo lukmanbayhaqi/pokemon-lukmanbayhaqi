@@ -1,0 +1,99 @@
+// use this command to run sass compiler
+// sass --watch app.scss style.css
+
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Press Start 2P", cursive;
+  font-size: small;
+  font-weight: 200;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a {
+  margin: 0;
+  color: black;
+
+  &:hover {
+    color: black;
+  }
+}
+
+.my-card {
+  .card {
+    border-radius: 5px;
+    &:hover {
+      border: 0.5px solid skyblue;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .position-relative {
+      .card-img {
+        width: 60vw;
+        height: 35vh;
+
+        @media only screen and (min-width: 600px) {
+          width: 20vw;
+          height: 20vh;
+        }
+        @media only screen and (min-width: 800px) {
+          width: 15vw;
+          height: 25vh;
+        }
+      }
+    }
+  }
+}
+
+.btn-group-fab {
+  position: fixed;
+  width: 100px;
+  height: auto;
+  right: 15px;
+  bottom: 40px;
+
+  div {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+  .btn {
+    position: absolute;
+    bottom: 0;
+    border-radius: 50%;
+    display: block;
+    margin-bottom: 4px;
+    width: 40px;
+    height: 40px;
+    margin: 4px auto;
+  }
+  .btn-main {
+    width: 60px;
+    height: 60px;
+    right: 20%;
+    z-index: 9;
+
+    @media only screen and (min-width: 600px) {
+      width: 65px;
+      height: 65px;
+      right: 50%;
+    }
+    @media only screen and (min-width: 800px) {
+      width: 65px;
+      height: 65px;
+      right: 50%;
+    }
+  }
+}
