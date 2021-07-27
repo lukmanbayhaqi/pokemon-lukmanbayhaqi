@@ -20,6 +20,8 @@ p,
 a {
   margin: 0;
   color: black;
+  text-decoration: none !important;
+  word-break: break-all;
 }
 h1:hover,
 h2:hover,
@@ -29,7 +31,49 @@ h5:hover,
 h6:hover,
 p:hover,
 a:hover {
+  text-decoration: underline !important;
   color: black;
+}
+
+@media only screen and (max-width: 768px) {
+  .show-only-desktop {
+    display: none !important;
+  }
+}
+
+@media only screen and (min-width: 778px) {
+  .show-only-tablet {
+    display: none !important;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .show-only-tablet {
+    display: none !important;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .show-only-mobile {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .show-desktop-tablet {
+    display: none !important;
+  }
+}
+
+@media only screen and (min-width: 778px) and (max-width: 768px) {
+  .show-desktop-mobile {
+    display: none !important;
+  }
+}
+
+@media only screen and (min-width: 778px) {
+  .show-tablet-mobile {
+    display: none !important;
+  }
 }
 
 .my-card .card {
@@ -46,7 +90,7 @@ a:hover {
 }
 @media only screen and (min-width: 600px) {
   .my-card .card .position-relative .card-img {
-    width: 20vw;
+    width: 30vw;
     height: 20vh;
   }
 }
@@ -98,6 +142,10 @@ a:hover {
     height: 65px;
     right: 50%;
   }
+}
+
+.multiselect__content-wrapper {
+  scrollbar-width: thin;
 }
 
 /*# sourceMappingURL=style.css.map */
