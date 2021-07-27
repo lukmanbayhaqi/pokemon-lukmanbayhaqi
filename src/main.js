@@ -30,8 +30,11 @@ import Multiselect from "vue-multiselect";
 
 Vue.component("multiselect", Multiselect);
 
-// My own styles
+// My own styles & components
 import "./styles/style.css";
+import Loading from "./components/loading.vue";
+
+Vue.component("loading", Loading);
 
 Vue.config.productionTip = false;
 

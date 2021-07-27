@@ -78,6 +78,20 @@ a:hover {
 
 .my-card .card {
   border-radius: 5px;
+  width: 75vw;
+  height: 40vh;
+}
+@media only screen and (min-width: 600px) {
+  .my-card .card {
+    width: 35vw;
+    height: 25vh;
+  }
+}
+@media only screen and (min-width: 800px) {
+  .my-card .card {
+    width: 17vw;
+    height: 30vh;
+  }
 }
 .my-card .card:hover {
   border: 0.5px solid skyblue;
@@ -146,6 +160,10 @@ a:hover {
 
 .multiselect__content-wrapper {
   scrollbar-width: thin;
+}
+
+.multiselect__input {
+  font-size: 15px;
 }
 
 /*# sourceMappingURL=style.css.map */
