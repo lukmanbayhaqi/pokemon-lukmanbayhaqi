@@ -28,7 +28,7 @@
                 `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${$route.params.id}.svg`
               "
               fluid
-              :alt="detail.name"
+              :alt="detail.name ? detail.name : '-'"
             />
             <b-button
               variant="outline-danger"
@@ -41,12 +41,15 @@
             </b-button>
           </div>
           <div class="col-lg-8">
-            <h3>{{ detail.name }}</h3>
+            <h3>{{ detail.name ? detail.name : "-" }}</h3>
             <hr />
             <section class="d-flex show-desktop-tablet">
               <h6>Types:</h6>
+              <h6 v-if="detail.types.length == 0">-</h6>
               <section
-                v-for="(type, i) in detail.types.length > 0 ? detail.types : []"
+                v-for="(type, i) in detail.types && detail.types.length > 0
+                  ? detail.types
+                  : []"
                 :key="i"
               >
                 <h6>
@@ -57,9 +60,11 @@
             </section>
             <section class="d-flex show-only-mobile">
               <h6>Types:</h6>
+              <h6 v-if="detail.types.length == 0">-</h6>
+
               <div>
                 <section
-                  v-for="(type, i) in detail.types.length > 0
+                  v-for="(type, i) in detail.types && detail.types.length > 0
                     ? detail.types
                     : []"
                   :key="i"
@@ -74,6 +79,7 @@
             <hr />
             <section class="d-flex show-desktop-tablet">
               <h6 class="break-word">Abilities:</h6>
+              <h6 v-if="detail.abilities.length == 0">-</h6>
               <section
                 v-for="(ability, i) in detail.abilities.length > 0
                   ? detail.abilities
@@ -88,6 +94,7 @@
             </section>
             <section class="d-flex flex-column show-only-mobile">
               <h6 class="break-word mb-2">Abilities:</h6>
+              <h6 v-if="detail.abilities.length == 0">-</h6>
               <div>
                 <section
                   v-for="(ability, i) in detail.abilities.length > 0
@@ -103,14 +110,21 @@
               </div>
             </section>
             <hr />
-            <h6>Color: {{ detail.color.name }}</h6>
+            <h6>Color: {{ detail.color ? detail.color.name : "-" }}</h6>
             <hr />
-            <h6>Base Happiness: {{ detail.base_happiness }}</h6>
+            <h6>
+              Base Happiness:
+              {{ detail.base_happiness ? detail.base_happiness : "-" }}
+            </h6>
             <hr />
-            <h6>Capture Rate: {{ detail.capture_rate }}</h6>
+            <h6>
+              Capture Rate:
+              {{ detail.capture_rate ? detail.capture_rate : "-" }}
+            </h6>
             <hr />
             <section class="d-flex show-desktop-tablet">
               <h6>Egg Group:</h6>
+              <h6 v-if="detail.egg_groups.length == 0">-</h6>
               <section
                 v-for="({ name }, i) in detail.egg_groups.length > 0
                   ? detail.egg_groups
@@ -126,6 +140,7 @@
               class="d-flex flex-column justify-content-around show-only-mobile"
             >
               <h6 class="break-word mb-2">Egg Group:</h6>
+              <h6 v-if="detail.egg_groups.length == 0">-</h6>
               <div class="d-flex flex-wrap">
                 <section
                   v-for="({ name }, i) in detail.egg_groups.length > 0
@@ -142,13 +157,17 @@
             </section>
             <hr />
             <h6 class="break-word">
-              Growth Rate: {{ detail.growth_rate.name }}
+              Growth Rate:
+              {{ detail.growth_rate ? detail.growth_rate.name : "-" }}
             </h6>
             <hr />
-            <h6 class="break-word">Habitat: {{ detail.habitat.name }}</h6>
+            <h6 class="break-word">
+              Habitat: {{ detail.habitat ? detail.habitat.name : "-" }}
+            </h6>
             <hr />
             <section class="d-flex show-only-desktop">
               <h6 class="break-word">Evolution:</h6>
+              <h6 v-if="detail.evolution.length == 0">-</h6>
               <section
                 class="d-flex flex-row"
                 style="margin-right: 1vw;"
@@ -170,6 +189,7 @@
             </section>
             <section class="d-flex show-only-tablet">
               <h6 class="break-word">Evolution:</h6>
+              <h6 v-if="detail.evolution.length == 0">-</h6>
               <section class="d-flex flex-row flex-wrap">
                 <h6
                   v-for="(evolution, i) in detail.evolution.length > 0
@@ -190,6 +210,7 @@
             </section>
             <section class="d-flex flex-column show-only-mobile">
               <h6 class="break-word mb-2">Evolution:</h6>
+              <h6 v-if="detail.evolution.length == 0">-</h6>
               <div>
                 <section
                   class="d-flex flex-row"
