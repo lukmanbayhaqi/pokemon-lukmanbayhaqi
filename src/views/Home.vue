@@ -60,41 +60,58 @@
       <div
         v-else
         class="my-card mb-5"
-        v-for="({ name, url }, i) in returnPokemons"
+        v-for="(pokemon, i) in returnPokemons"
         :key="i"
       >
         <b-card
           class="p-3"
           :img-src="
             `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${returnIndexPokemon(
-              url
+              pokemon.url
             )}.svg`
           "
-          :img-alt="name"
+          :img-alt="pokemon.name"
           overlay
-          @click="() => $router.push(`/detail/${returnIndexPokemon(url)}`)"
+          @click="
+            () => $router.push(`/detail/${returnIndexPokemon(pokemon.url)}`)
+          "
         />
         <div
           class="pokemon-name d-flex justify-content-between align-items-center my-2 px-2"
         >
           <h5 class="d-flex justify-content-start align-item-center">
-            <router-link :to="`/detail/${returnIndexPokemon(url)}`">
-              {{ name }}
+            <router-link :to="`/detail/${returnIndexPokemon(pokemon.url)}`">
+              {{ pokemon.name }}
             </router-link>
           </h5>
 
           <h5>
-            <!-- <b-icon
-              :id="favorite ? 'remove-from-favorite' : 'add-to-favorite'"
+            <b-icon
+              :id="
+                pokemon.favorite ? 'remove-from-favorite' : 'add-to-favorite'
+              "
               style="cursor: pointer;"
-              :icon="favorite ? 'suit-heart-fill' : 'suit-heart'"
+              :icon="pokemon.favorite ? 'suit-heart-fill' : 'suit-heart'"
               color="red"
-              @click="addToFavorite(i)"
+              @click="addToFavorite(pokemon)"
               v-b-tooltip.hover
-              :title="favorite ? 'remove from favorite' : 'add to favorite'"
-            /> -->
+              :title="
+                pokemon.favorite ? 'remove from favorite' : 'add to favorite'
+              "
+            />
           </h5>
         </div>
+      </div>
+
+      <div
+        v-if="returnPokemons.length === 0"
+        class="no-pokemon-found d-flex flex-column justify-content-center align-items-center"
+      >
+        <b-img
+          src="https://pngimg.com/uploads/pokeball/pokeball_PNG24.png"
+          alt="Pokeball"
+        />
+        <h6>Oopps, There is no Pokemon here</h6>
       </div>
     </div>
 
@@ -138,7 +155,9 @@ export default {
     keyword: null,
     listTypePokemon: [],
     listFilteredPokemons: [],
+    searchResult: [],
     isFilter: false,
+    isSearch: false,
   }),
   created() {
     window.scrollTo(0, 0);
@@ -150,11 +169,24 @@ export default {
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
   },
+  watch: {
+    keyword(after) {
+      if (after === "") this.isSearch = false;
+      else {
+        this.isSearch = true;
+        this.searchResult = this.$store.state.pokemonList.filter(
+          (el) => el.name.toLowerCase().indexOf(after.toLowerCase()) > -1
+        );
+      }
+    },
+  },
   computed: {
     returnPokemons() {
-      if (this.isFilter) return this.listFilteredPokemons;
+      if (this.isSearch) return this.searchResult;
 
-      return this.$store.state.pokemonList;
+      if (this.isFilter) return this.filterFavorite(this.listFilteredPokemons);
+
+      return this.filterFavorite(this.$store.state.pokemonList);
     },
   },
   methods: {
@@ -168,8 +200,8 @@ export default {
         .catch(console.error)
         .finally(() => (this.typePokemonLoading = false));
     },
-    addToFavorite(index) {
-      this.$store.commit("setFavorite", { index });
+    addToFavorite(pokemon) {
+      this.$store.commit("setFavorite", pokemon);
     },
     handleScroll(e) {
       let {
@@ -184,7 +216,8 @@ export default {
       if (
         scrollTop + clientHeight >= scrollHeight - 1 &&
         !this.loadMoreLoading &&
-        !this.isFilter
+        !this.isFilter &&
+        !this.isSearch
       ) {
         this.loadMoreLoading = true;
 
@@ -209,21 +242,55 @@ export default {
       return arr[arr.length - 2];
     },
     handleFilterPokemon(filter) {
-      console.log(filter);
       if (!filter) {
         this.isFilter = false;
         this.listFilteredPokemons = [];
       } else if (filter.url) {
-        this.isFilter = true;
-        this.filterLoading = true;
+        const { name, url } = filter;
+        const findFilterPokemon = this.$store.state.filteredPokemon.find(
+          (el) => el.name === name
+        );
 
-        get(`${filter.url}`)
-          .then(({ data }) => {
-            this.listFilteredPokemons = data.pokemon.map((el) => el.pokemon);
-          })
-          .catch(console.error)
-          .finally(() => (this.filterLoading = false));
+        this.isFilter = true;
+
+        if (findFilterPokemon) {
+          this.listFilteredPokemons = findFilterPokemon.dataPokemon;
+        } else {
+          this.filterLoading = true;
+
+          get(`${filter.url}`)
+            .then(({ data }) => {
+              let dataPokemon = data.pokemon.map((el) => el.pokemon);
+              dataPokemon = dataPokemon.map((el) => {
+                el.favorite = false;
+                return el;
+              });
+
+              this.listFilteredPokemons = dataPokemon;
+              this.$store.commit("setFilteredPokemon", {
+                name,
+                url,
+                dataPokemon,
+              });
+            })
+            .catch(console.error)
+            .finally(() => (this.filterLoading = false));
+        }
       }
+    },
+    filterFavorite(list) {
+      const favoriteListStore = this.$store.state.favoriteList;
+
+      return list.slice().map((el) => {
+        const findFavorite = favoriteListStore.find(
+          (element) => el.name === element.name
+        );
+
+        if (findFavorite) el.favorite = true;
+        else el.favorite = false;
+
+        return el;
+      });
     },
   },
 };
@@ -231,14 +298,23 @@ export default {
 
 <style lang="scss">
 .pokemon-name {
-  width: 60vw;
+  width: 75vw;
 
   @media only screen and (min-width: 600px) {
-    width: 30vw;
+    width: 35vw;
   }
 
   @media only screen and (min-width: 800px) {
-    width: 15vw;
+    width: 17vw;
+  }
+}
+
+.no-pokemon-found {
+  img {
+    width: 60vw;
+    @media only screen and (min-width: 600px) {
+      width: 15vw;
+    }
   }
 }
 </style>
