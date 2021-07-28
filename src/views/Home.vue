@@ -104,7 +104,7 @@
       </div>
 
       <div
-        v-if="returnPokemons.length === 0"
+        v-if="!filterLoading && returnPokemons.length === 0"
         class="no-pokemon-found d-flex flex-column justify-content-center align-items-center"
       >
         <b-img

@@ -18,7 +18,12 @@
       style="margin-right: 10px;"
     ></b-navbar-toggle>
 
-    <b-collapse id="nav-collapse" is-nav>
+    <b-collapse
+      class="justify-content-between"
+      style="padding-right: 1vw;"
+      id="nav-collapse"
+      is-nav
+    >
       <b-navbar-nav>
         <b-nav-item
           class="mt-2 ml-3"
@@ -45,6 +50,23 @@
             <div style="width: 10px" />
             <h5 style="color: whitesmoke;">
               Favorite
+            </h5>
+          </div>
+        </b-nav-item>
+      </b-navbar-nav>
+      <b-navbar-nav>
+        <b-nav-item
+          class="mt-2 ml-3"
+          style="margin-left: 10px;"
+          @click="changePage('/')"
+        >
+          <div class="d-flex flex-row align-items-center">
+            <h5>
+              <b-icon icon="clock-history" color="red" />
+            </h5>
+            <div style="width: 10px" />
+            <h5 style="color: whitesmoke;">
+              History
             </h5>
           </div>
         </b-nav-item>

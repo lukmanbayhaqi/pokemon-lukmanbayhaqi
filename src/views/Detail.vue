@@ -15,13 +15,15 @@
       style="height: 50vh;"
       @scroll="handleScroll"
     >
-      <b-spinner v-if="isLoading" variant="primary" />
+      <loading v-if="isLoading" />
+
       <div class="col-lg-12" v-else>
         <div class="row">
           <div
             class="col-lg-4 d-flex justify-content-center align-items-center flex-column"
           >
             <b-img
+              class="detail-image"
               :src="
                 `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${$route.params.id}.svg`
               "
@@ -150,12 +152,12 @@
         <div class="row p-5 show-only-desktop">
           <h6>Story about {{ detail.name }}</h6>
           <hr />
-          <p>{{ detail.description }}</p>
+          <p class="break-word">{{ detail.description }}</p>
         </div>
         <div class="row p-2 show-tablet-mobile">
           <h6 class="break-word">Story about {{ detail.name }}</h6>
           <hr />
-          <p>{{ detail.description }}</p>
+          <p class="break-word">{{ detail.description }}</p>
         </div>
       </div>
     </div>
@@ -278,4 +280,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+.detail-image {
+  height: 25vh;
+
+  @media only screen and (min-width: 800px) {
+    height: 35vh;
+  }
+}
+</style>
