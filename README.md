@@ -1,5 +1,9 @@
 # pokemon-lukmanbayhaqi
 
+- **Link Deployment (deployed with [netlify.com](netlify.com))**
+
+[https://pokemon-lukmanbayhaqi.netlify.app/](https://pokemon-lukmanbayhaqi.netlify.app/)
+
 ## Project setup
 
 ### Install packages
