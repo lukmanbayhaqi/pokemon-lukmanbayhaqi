@@ -279,7 +279,7 @@ export default {
     fetchDetailPokemon() {
       this.isLoading = true;
 
-      get(`https://pokeapi.co/api/v2/pokemon/${this.$route.params.id}`)
+      get(`pokemon/${this.$route.params.id}`)
         .then(({ data }) => {
           this.detail = data;
 
