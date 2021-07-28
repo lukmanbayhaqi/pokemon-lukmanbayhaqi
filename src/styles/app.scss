@@ -1,0 +1,179 @@
+// use this command to run sass compiler (from root folder)
+// cd src/styles && sass --watch app.scss style.css
+
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Press Start 2P", cursive;
+  font-size: small;
+  font-weight: 200;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a {
+  margin: 0;
+  color: black;
+  word-break: break-all;
+
+  &:hover {
+    color: black;
+  }
+}
+
+a {
+  text-decoration: none !important;
+
+  &:hover {
+    text-decoration: underline !important;
+  }
+}
+
+$mobile: 500px;
+$tablet: 768px;
+$desktop: 778px;
+
+.show-only-desktop {
+  @media only screen and (max-width: $tablet) {
+    display: none !important;
+  }
+}
+
+.show-only-tablet {
+  @media only screen and (min-width: $desktop) {
+    display: none !important;
+  }
+  @media only screen and (max-width: $mobile) {
+    display: none !important;
+  }
+}
+
+.show-only-mobile {
+  @media only screen and (min-width: $tablet) {
+    display: none !important;
+  }
+}
+
+.show-desktop-tablet {
+  @media only screen and (max-width: $mobile) {
+    display: none !important;
+  }
+}
+
+.show-desktop-mobile {
+  @media only screen and (min-width: $desktop) and (max-width: $tablet) {
+    display: none !important;
+  }
+}
+
+.show-tablet-mobile {
+  @media only screen and (min-width: $desktop) {
+    display: none !important;
+  }
+}
+
+.my-card {
+  .card {
+    border-radius: 5px;
+    width: 75vw;
+    height: 40vh;
+
+    @media only screen and (min-width: 600px) {
+      width: 35vw;
+      height: 25vh;
+    }
+    @media only screen and (min-width: 800px) {
+      width: 17vw;
+      height: 30vh;
+    }
+
+    &:hover {
+      border: 0.5px solid skyblue;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .position-relative {
+      .card-img {
+        width: 60vw;
+        height: 35vh;
+
+        @media only screen and (min-width: 600px) {
+          width: 30vw;
+          height: 20vh;
+        }
+        @media only screen and (min-width: 800px) {
+          width: 15vw;
+          height: 25vh;
+        }
+      }
+    }
+  }
+}
+
+.btn-group-fab {
+  position: fixed;
+  width: 100px;
+  height: auto;
+  right: 15px;
+  bottom: 40px;
+
+  div {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+  .btn {
+    position: absolute;
+    bottom: 0;
+    border-radius: 50%;
+    display: block;
+    margin-bottom: 4px;
+    width: 40px;
+    height: 40px;
+    margin: 4px auto;
+  }
+  .btn-main {
+    width: 60px;
+    height: 60px;
+    right: 20%;
+    z-index: 9;
+
+    @media only screen and (min-width: 600px) {
+      width: 65px;
+      height: 65px;
+      right: 50%;
+    }
+    @media only screen and (min-width: 800px) {
+      width: 65px;
+      height: 65px;
+      right: 50%;
+    }
+  }
+}
+
+.multiselect__content-wrapper {
+  scrollbar-width: thin;
+}
+
+.multiselect__input {
+  font-size: 15px;
+}
+
+.break-word {
+  word-break: keep-all;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
