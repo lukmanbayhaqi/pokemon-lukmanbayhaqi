@@ -175,7 +175,7 @@ export default {
   },
   watch: {
     keyword(after) {
-      if (after === "") {
+      if (!after || after === "") {
         this.isSearch = false;
 
         this.$store.commit("setHistoryList", {
@@ -183,9 +183,14 @@ export default {
         });
       } else {
         this.isSearch = true;
-        this.searchResult = this.$store.state.pokemonList.filter(
-          (el) => el.name.toLowerCase().indexOf(after.toLowerCase()) > -1
-        );
+        if (this.isFilter)
+          this.searchResult = this.listFilteredPokemons.filter(
+            (el) => el.name.toLowerCase().indexOf(after.toLowerCase()) > -1
+          );
+        else
+          this.searchResult = this.$store.state.pokemonList.filter(
+            (el) => el.name.toLowerCase().indexOf(after.toLowerCase()) > -1
+          );
 
         this.$store.commit("setHistoryList", {
           detail: `You search pokemon by "${after}" keyword and showing ${this.searchResult.length} result`,
@@ -259,6 +264,8 @@ export default {
       return arr[arr.length - 2];
     },
     handleFilterPokemon(filter) {
+      this.keyword = null;
+
       if (!filter) {
         this.isFilter = false;
         this.listFilteredPokemons = [];
