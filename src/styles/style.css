@@ -175,4 +175,8 @@ a:hover {
   word-break: keep-all;
 }
 
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
 /*# sourceMappingURL=style.css.map */
