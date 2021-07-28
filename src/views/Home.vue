@@ -206,7 +206,7 @@ export default {
     loadTypePokemon() {
       this.typePokemonLoading = true;
 
-      get("https://pokeapi.co/api/v2/type")
+      get("type")
         .then(({ data }) => {
           this.listTypePokemon = data.results;
         })

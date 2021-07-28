@@ -15,6 +15,8 @@ Vue.use(IconsPlugin);
 // Axios
 import Axios from "axios";
 
+Axios.defaults.baseURL = process.env.VUE_APP_POKEMON_BASE_URL;
+
 // set global axios
 window.get = (...args) => {
   return new Promise((resolve, reject) => {
