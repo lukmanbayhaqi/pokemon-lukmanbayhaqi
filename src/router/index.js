@@ -13,6 +13,11 @@ const routes = [
     path: "/detail/:id",
     component: () => import("../views/Detail.vue"),
   },
+  {
+    path: "/favorite",
+    name: "Favorite",
+    component: () => import("../views/Favorite.vue"),
+  },
 ];
 
 const router = new VueRouter({
