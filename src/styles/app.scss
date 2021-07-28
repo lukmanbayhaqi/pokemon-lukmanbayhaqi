@@ -1,5 +1,5 @@
-// use this command to run sass compiler
-// sass --watch app.scss style.css
+// use this command to run sass compiler (from root folder)
+// cd src/styles && sass --watch app.scss style.css
 
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
@@ -24,12 +24,18 @@ p,
 a {
   margin: 0;
   color: black;
-  text-decoration: none !important;
   word-break: break-all;
 
   &:hover {
-    text-decoration: underline !important;
     color: black;
+  }
+}
+
+a {
+  text-decoration: none !important;
+
+  &:hover {
+    text-decoration: underline !important;
   }
 }
 
@@ -162,4 +168,8 @@ $desktop: 778px;
 
 .multiselect__input {
   font-size: 15px;
+}
+
+.break-word {
+  word-break: keep-all;
 }
