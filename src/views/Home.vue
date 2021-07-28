@@ -200,7 +200,7 @@ export default {
   },
   computed: {
     returnPokemons() {
-      if (this.isSearch) return this.searchResult;
+      if (this.isSearch) return this.filterFavorite(this.searchResult);
 
       if (this.isFilter) return this.filterFavorite(this.listFilteredPokemons);
 
