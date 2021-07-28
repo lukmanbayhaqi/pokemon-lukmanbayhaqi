@@ -5,9 +5,9 @@
     type="dark"
     variant="primary"
   >
-    <b-navbar-brand @click="() => $router.push('/')">
+    <b-navbar-brand @click="changePage('/')">
       <b-img
-        class="pokemon-logo"
+        class="pokemon-logo cursor-pointer"
         src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/1024px-International_Pok%C3%A9mon_logo.svg.png"
         alt="Pokemon"
       ></b-img>
@@ -58,7 +58,7 @@
         <b-nav-item
           class="mt-2 ml-3"
           style="margin-left: 10px;"
-          @click="changePage('/')"
+          @click="() => $bvModal.show('history')"
         >
           <div class="d-flex flex-row align-items-center">
             <h5>

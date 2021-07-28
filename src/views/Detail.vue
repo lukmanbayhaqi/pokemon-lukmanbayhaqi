@@ -147,6 +147,70 @@
             <hr />
             <h6 class="break-word">Habitat: {{ detail.habitat.name }}</h6>
             <hr />
+            <section class="d-flex show-only-desktop">
+              <h6 class="break-word">Evolution:</h6>
+              <section
+                class="d-flex flex-row"
+                style="margin-right: 1vw;"
+                v-for="(evolution, i) in detail.evolution.length > 0
+                  ? detail.evolution
+                  : []"
+                :key="i"
+              >
+                <h6 style="margin-right: 1vw;">
+                  <a
+                    class="cursor-pointer w-100"
+                    @click="handleClickEvoluton(evolution.url)"
+                  >
+                    {{ evolution.name }}
+                  </a>
+                </h6>
+                {{ i !== detail.evolution.length - 1 ? "=>" : "" }}
+              </section>
+            </section>
+            <section class="d-flex show-only-tablet">
+              <h6 class="break-word">Evolution:</h6>
+              <section class="d-flex flex-row flex-wrap">
+                <h6
+                  v-for="(evolution, i) in detail.evolution.length > 0
+                    ? detail.evolution
+                    : []"
+                  :key="i"
+                  style="margin-right: 1vw;"
+                >
+                  <a
+                    class="cursor-pointer w-100"
+                    @click="handleClickEvoluton(evolution.url)"
+                  >
+                    {{ evolution.name }}
+                  </a>
+                  {{ i !== detail.evolution.length - 1 ? "=>" : "" }}
+                </h6>
+              </section>
+            </section>
+            <section class="d-flex flex-column show-only-mobile">
+              <h6 class="break-word mb-2">Evolution:</h6>
+              <div>
+                <section
+                  class="d-flex flex-row"
+                  v-for="(evolution, i) in detail.evolution.length > 0
+                    ? detail.evolution
+                    : []"
+                  :key="i"
+                >
+                  <h6 style="margin-right: 1vw;">
+                    <a
+                      class="cursor-pointer w-100"
+                      @click="handleClickEvoluton(evolution.url)"
+                    >
+                      {{ evolution.name }}
+                    </a>
+                  </h6>
+                  {{ i !== detail.evolution.length - 1 ? "=>" : "" }}
+                </section>
+              </div>
+            </section>
+            <hr />
           </div>
         </div>
         <div class="row p-5 show-only-desktop">
@@ -241,7 +305,11 @@ export default {
           return get(this.detail.evolution_chain.url);
         })
         .then(({ data }) => {
-          this.getEvolution(data.chain.evolves_to);
+          this.getEvolution([data.chain]);
+
+          this.$store.commit("setHistoryList", {
+            detail: `You entered ${this.detail.name} Detail page`,
+          });
         })
         .catch(console.error)
         .finally(() => (this.isLoading = false));
@@ -275,6 +343,15 @@ export default {
         block: "start",
         behavior: "smooth",
       });
+    },
+    handleClickEvoluton(url) {
+      const arr = url.split("/");
+
+      setTimeout(() => {
+        this.fetchDetailPokemon();
+      }, 100);
+
+      return this.$router.push(`/detail/${arr[arr.length - 2]}`);
     },
   },
 };

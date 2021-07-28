@@ -8,6 +8,12 @@ export default new Vuex.Store({
     pokemonList: [],
     favoriteList: [],
     filteredPokemon: [],
+    historyList: [
+      {
+        detail: "You entered this app",
+        date: new Date(),
+      },
+    ],
     nextUrl: "https://pokeapi.co/api/v2/pokemon?offset=0&limit=20",
   },
   mutations: {
@@ -25,11 +31,26 @@ export default new Vuex.Store({
         }
       });
 
-      if (findFavorite) state.favoriteList.splice(indexFavorite, 1);
-      else state.favoriteList.push(payload);
+      if (findFavorite) {
+        state.favoriteList.splice(indexFavorite, 1);
+        state.historyList.push({
+          detail: `You remove ${payload.name} from favorite`,
+          date: new Date(),
+        });
+      } else {
+        state.favoriteList.push(payload);
+        state.historyList.push({
+          detail: `You add ${payload.name} to favorite`,
+          date: new Date(),
+        });
+      }
     },
     setFilteredPokemon(state, payload) {
       state.filteredPokemon.push(payload);
+    },
+    setHistoryList(state, payload) {
+      payload.date = new Date();
+      state.historyList.push(payload);
     },
   },
   actions: {

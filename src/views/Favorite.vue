@@ -94,6 +94,11 @@ export default {
     window.scrollTo(0, 0);
     window.addEventListener("scroll", this.handleScroll);
   },
+  mounted() {
+    this.$store.commit("setHistoryList", {
+      detail: "You entered Favorite page",
+    });
+  },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
   },

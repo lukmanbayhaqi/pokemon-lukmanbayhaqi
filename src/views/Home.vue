@@ -165,18 +165,31 @@ export default {
   },
   mounted() {
     this.loadTypePokemon();
+
+    this.$store.commit("setHistoryList", {
+      detail: "You entered Home page",
+    });
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
   },
   watch: {
     keyword(after) {
-      if (after === "") this.isSearch = false;
-      else {
+      if (after === "") {
+        this.isSearch = false;
+
+        this.$store.commit("setHistoryList", {
+          detail: `You clear search keyword pokemon`,
+        });
+      } else {
         this.isSearch = true;
         this.searchResult = this.$store.state.pokemonList.filter(
           (el) => el.name.toLowerCase().indexOf(after.toLowerCase()) > -1
         );
+
+        this.$store.commit("setHistoryList", {
+          detail: `You search pokemon by "${after}" keyword and showing ${this.searchResult.length} result`,
+        });
       }
     },
   },
@@ -223,7 +236,11 @@ export default {
 
         this.$store
           .dispatch("fetchPokemon")
-          .then(() => {})
+          .then(() => {
+            this.$store.commit("setHistoryList", {
+              detail: `You increase the number of pokemon and now there are ${this.$store.state.pokemonList.length} pokemon`,
+            });
+          })
           .catch(() => {})
           .finally(() => (this.loadMoreLoading = false));
       }
@@ -245,6 +262,9 @@ export default {
       if (!filter) {
         this.isFilter = false;
         this.listFilteredPokemons = [];
+        this.$store.commit("setHistoryList", {
+          detail: `You remove filter pokemon`,
+        });
       } else if (filter.url) {
         const { name, url } = filter;
         const findFilterPokemon = this.$store.state.filteredPokemon.find(
@@ -255,6 +275,10 @@ export default {
 
         if (findFilterPokemon) {
           this.listFilteredPokemons = findFilterPokemon.dataPokemon;
+
+          this.$store.commit("setHistoryList", {
+            detail: `You set filter pokemon by "${name}" type and showing ${this.listFilteredPokemons.length} result`,
+          });
         } else {
           this.filterLoading = true;
 
@@ -271,6 +295,10 @@ export default {
                 name,
                 url,
                 dataPokemon,
+              });
+
+              this.$store.commit("setHistoryList", {
+                detail: `You set filter pokemon by "${name}" type and showing ${this.listFilteredPokemons.length} result`,
               });
             })
             .catch(console.error)
