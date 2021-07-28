@@ -6,20 +6,30 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     pokemonList: [],
+    favoriteList: [],
+    filteredPokemon: [],
     nextUrl: "https://pokeapi.co/api/v2/pokemon?offset=0&limit=20",
   },
   mutations: {
     setPokemonList(state, payload) {
       state.pokemonList = [...state.pokemonList, ...payload.data];
-      state.pokemonList.forEach((el, i) => (el.favoriteId = i));
 
       state.nextUrl = payload.nextUrl;
     },
     setFavorite(state, payload) {
-      if (state.pokemonList[payload.index])
-        state.pokemonList[payload.index].favorite = !state.pokemonList[
-          payload.index
-        ].favorite;
+      let indexFavorite = null;
+      const findFavorite = state.favoriteList.find((el, i) => {
+        if (el.name == payload.name) {
+          indexFavorite = i;
+          return el;
+        }
+      });
+
+      if (findFavorite) state.favoriteList.splice(indexFavorite, 1);
+      else state.favoriteList.push(payload);
+    },
+    setFilteredPokemon(state, payload) {
+      state.filteredPokemon.push(payload);
     },
   },
   actions: {
