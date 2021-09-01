@@ -55,6 +55,8 @@
         </div>
       </div>
 
+      document referer: {{ documentReferer }}
+
       <loading v-if="filterLoading" />
 
       <div
@@ -158,13 +160,15 @@ export default {
     searchResult: [],
     isFilter: false,
     isSearch: false,
+    documentReferer: "document referer",
   }),
   created() {
     window.scrollTo(0, 0);
     window.addEventListener("scroll", this.handleScroll);
   },
   mounted() {
-    console.log(document.referrer);
+    this.documentReferer = document.referrer;
+
     this.loadTypePokemon();
 
     this.$store.commit("setHistoryList", {
