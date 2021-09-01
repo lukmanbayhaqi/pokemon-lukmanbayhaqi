@@ -164,6 +164,7 @@ export default {
     window.addEventListener("scroll", this.handleScroll);
   },
   mounted() {
+    console.log(document.referrer);
     this.loadTypePokemon();
 
     this.$store.commit("setHistoryList", {
