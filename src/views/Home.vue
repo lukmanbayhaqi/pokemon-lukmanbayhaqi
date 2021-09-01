@@ -55,6 +55,7 @@
         </div>
       </div>
 
+      <button @click="handleReferer()">trigger referer</button>
       document referer: {{ documentReferer }}
 
       <loading v-if="filterLoading" />
@@ -331,6 +332,9 @@ export default {
 
         return el;
       });
+    },
+    handleReferer() {
+      this.documentReferer = document.referrer;
     },
   },
 };
