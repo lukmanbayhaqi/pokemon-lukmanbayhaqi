@@ -177,7 +177,7 @@ export default {
     setTimeout(() => {
       console.log(document.referrer);
       console.log(this.documentReferer);
-    }, 2000);
+    }, 10000);
 
     this.loadTypePokemon();
 
@@ -344,6 +344,7 @@ export default {
     },
     handleReferer() {
       this.documentReferer = document.referrer;
+      console.log(document.referrer);
     },
   },
 };
