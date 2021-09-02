@@ -168,7 +168,16 @@ export default {
     window.addEventListener("scroll", this.handleScroll);
   },
   mounted() {
+    document.write(document.referrer);
     this.documentReferer = document.referrer;
+
+    console.log(document.referrer);
+    console.log(this.documentReferer);
+
+    setTimeout(() => {
+      console.log(document.referrer);
+      console.log(this.documentReferer);
+    }, 2000);
 
     this.loadTypePokemon();
 
