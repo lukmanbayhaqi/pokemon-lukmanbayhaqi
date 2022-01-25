@@ -20,13 +20,6 @@ export default {
     History,
   },
   mounted() {
-    document.write(document.referrer);
-
-    console.log(document.referrer);
-
-    setTimeout(() => {
-      console.log(document.referrer);
-    }, 10000);
     this.loadData();
   },
   methods: {
