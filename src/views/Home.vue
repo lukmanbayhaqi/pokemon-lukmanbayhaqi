@@ -156,7 +156,6 @@ export default {
     searchResult: [],
     isFilter: false,
     isSearch: false,
-    documentReferer: "document referer",
   }),
   created() {
     window.scrollTo(0, 0);
@@ -322,10 +321,6 @@ export default {
 
         return el;
       });
-    },
-    handleReferer() {
-      this.documentReferer = document.referrer;
-      console.log(document.referrer);
     },
   },
 };
