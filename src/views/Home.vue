@@ -3,7 +3,7 @@
     <!-- Container -->
     <div
       class="w-100 d-flex flex-wrap justify-content-around"
-      style="margin-top: 10vh;"
+      style="margin-top: 10vh"
       id="container-scroll"
       @scroll="handleScroll"
     >
@@ -23,13 +23,13 @@
             track-by="name"
           >
             <span slot="noResult">
-              <small style="font-size: 10px;">
+              <small style="font-size: 10px">
                 There is no data found, please consider to change your search
                 keyword
               </small>
             </span>
             <span slot="noOptions">
-              <small style="font-size: 10px;">
+              <small style="font-size: 10px">
                 There is no data found here, consider to reload this page
               </small>
             </span>
@@ -55,9 +55,6 @@
         </div>
       </div>
 
-      <button @click="handleReferer()">trigger referer</button>
-      document referer: {{ documentReferer }}
-
       <loading v-if="filterLoading" />
 
       <div
@@ -68,11 +65,9 @@
       >
         <b-card
           class="p-3"
-          :img-src="
-            `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${returnIndexPokemon(
-              pokemon.url
-            )}.svg`
-          "
+          :img-src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${returnIndexPokemon(
+            pokemon.url
+          )}.svg`"
           :img-alt="pokemon.name"
           overlay
           @click="
@@ -93,7 +88,7 @@
               :id="
                 pokemon.favorite ? 'remove-from-favorite' : 'add-to-favorite'
               "
-              style="cursor: pointer;"
+              style="cursor: pointer"
               :icon="pokemon.favorite ? 'suit-heart-fill' : 'suit-heart'"
               color="red"
               @click="addToFavorite(pokemon)"
@@ -168,17 +163,6 @@ export default {
     window.addEventListener("scroll", this.handleScroll);
   },
   mounted() {
-    document.write(document.referrer);
-    this.documentReferer = document.referrer;
-
-    console.log(document.referrer);
-    console.log(this.documentReferer);
-
-    setTimeout(() => {
-      console.log(document.referrer);
-      console.log(this.documentReferer);
-    }, 10000);
-
     this.loadTypePokemon();
 
     this.$store.commit("setHistoryList", {
@@ -237,11 +221,8 @@ export default {
       this.$store.commit("setFavorite", pokemon);
     },
     handleScroll(e) {
-      let {
-        scrollTop,
-        clientHeight,
-        scrollHeight,
-      } = e.srcElement.scrollingElement;
+      let { scrollTop, clientHeight, scrollHeight } =
+        e.srcElement.scrollingElement;
 
       if (scrollTop > 300) this.showChevronUp = true;
       else this.showChevronUp = false;
